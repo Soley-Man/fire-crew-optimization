@@ -94,6 +94,22 @@ for ranger in fire_rangers:
 avg_experience_base = round( stat.mean([int(ranger["Years of Experience"]) for ranger in fire_rangers]), 2)
 
 # Initialize Solution
+crew_ids = [n for n in range(1, crews_n + 1)] * 4
+crew_ids.extend( [n for n in range(1, five_ranger_crews_n + 1)] )
+
+solution = [0 for id in range(len(crew_ids))]
+
+## Shuffle to add randomness to initial solution
+random.shuffle(leaders_idx)
+random.shuffle(bosses_idx)
+random.shuffle(members_idx)
+
+for idx in leaders_idx:
+    solution[idx] = crew_ids.pop(0)
+for idx in bosses_idx:
+    solution[idx] = crew_ids.pop(0)
+for idx in members_idx:
+    solution[idx] = crew_ids.pop(0)
 
 # Cost Function
 
