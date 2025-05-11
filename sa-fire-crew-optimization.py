@@ -72,10 +72,10 @@ for ranger in fire_rangers:
     unavailabilities = []
     if ranger['Start Date']:
         start_day_num = date_to_day_number(ranger['Start Date'])
-        unavailabilities.extend([_ for _ in range(start_day_num)])
+        unavailabilities.extend([n for n in range(start_day_num)])
     if ranger['End Date']:
         end_day_num = date_to_day_number(ranger['End Date'])
-        unavailabilities.extend([_ for _ in range(end_day_num + 1, date_to_day_number(SEASON_END) + 1)]) # End Date is the last day of work
+        unavailabilities.extend([n for n in range(end_day_num + 1, date_to_day_number(SEASON_END) + 1)]) # End Date is the last day of work
     
     ranger['Unavailabilities'] = unavailabilities
 
