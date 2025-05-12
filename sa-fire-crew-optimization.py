@@ -195,6 +195,8 @@ def fitness_certification_penalty(crew: list[int], leadership_indexes: list[int]
     amount_certified = len([ranger_id for ranger_id in crew if is_certified(ranger_id)]) 
     if amount_certified < 4:
         return (4 - amount_certified) * 50
+    
+    return 0
 
 # Data Preparation
 ## Read Fire Rangers data
