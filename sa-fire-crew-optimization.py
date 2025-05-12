@@ -234,14 +234,11 @@ for ranger in fire_rangers:
 
 ## Convert ranger preferences from string to list of names
 for ranger in fire_rangers:
-    try:
-        ranger['Same crew preferences'] = ranger['Same crew preferences'].split(',')
-    except:
-        pass
-    try:
-        ranger['Different crew preferences'] = ranger['Different crew preferences'].split(',')
-    except: 
-        pass
+    same_prefs = ranger.get('Same crew preferences', '')
+    ranger['Same crew preferences'] = same_prefs.split(',') if same_prefs else []
+
+    diff_prefs = ranger.get('Different crew preferences', '')
+    ranger['Different crew preferences'] = diff_prefs.split(',') if diff_prefs else []
 
 ## Calculate average experience across the fire base
 avg_base_experience = round( stat.mean([int(ranger["Years of Experience"]) for ranger in fire_rangers]), 2)
