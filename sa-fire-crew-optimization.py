@@ -2,6 +2,7 @@ import csv
 import random
 import math
 import statistics as stat
+from collections import defaultdict
 
 # Constants
 SEASON_START = 'May 1'
@@ -42,6 +43,70 @@ def date_to_day_number(date_str: str) -> int:
     input_day_of_year = CUMULATIVE_DAYS[month] + day
     start_day_of_year = CUMULATIVE_DAYS[start_month] + start_day
     return input_day_of_year - start_day_of_year
+
+def rangers_to_crew(solution: list[int]) -> dict[int: list[int]]:
+    '''
+    Return a dictionary pairing crew IDs with the list of Fire Rangers in that crew.
+    Fire Rangers are represented as their indexes in the solution.
+    '''
+    crew_assignment = defaultdict(list)
+    for ranger_id, crew_id in enumerate(solution):
+        crew_assignment[crew_id].append(ranger_id)
+    
+    return crew_assignment
+
+def is_mixed_gender(crew: list[int]):
+    """
+    Return true if crew contains Rangers of mixed genders.
+    The parameter crew is a list of Fire Rangers' indexes in the solution.
+    """
+    genders = set()
+
+    for ranger_id in crew:
+        genders.add(fire_rangers[ranger_id]["Gender"])
+    
+    return len(genders) > 1
+
+def is_certified(ranger_id: int):
+    """
+    Return true if the Ranger has a national fitness certification.
+    """
+    return fire_rangers[ranger_id]["Fitness Certification"] == "National"
+
+def has_mixed_gender_restriction(ranger_id: int):
+    """
+    Return true if the Ranger must not be placed in a mixed gender crew.
+    """ 
+    return fire_rangers[ranger_id]["Mixed Crew Restrictions"] != ''
+
+def is_in_crew(crew: list[int], ranger_name: str):
+    """
+    Return true if the Ranger with ranger_name is in the crew.
+    """
+    for ranger_id in crew:
+        if fire_rangers[ranger_id]["Name"] == ranger_name:
+            return True
+    return False
+
+def count_overlapping_unavailabilities(ranger_ids: list[int], n=0):
+    """
+    Return the number of overlapping unavailable days for Rangers in ranger_ids.
+    If n=0, only count the days when all Fire Rangers are unavailable. If n > 0, count the days when at least n fire Rangers are unavailable.
+    """
+    count = 0
+    all_unavailabilities = []
+
+    for id in ranger_ids:
+        for unavailable_day in fire_rangers[id]["Unavailabilities"]:
+            all_unavailabilities.append(unavailable_day)
+    
+    for day in set(all_unavailabilities):
+        if n == 0 and all_unavailabilities.count(day) == len(ranger_ids):
+            count += 1
+        elif n > 0 and all_unavailabilities.count(day) >= n:
+            count += 1
+
+    return count
 
 # Data Preparation
 ## Read Fire Rangers data
@@ -112,6 +177,15 @@ for idx in members_idx:
     solution[idx] = crew_ids.pop(0)
 
 # Cost Function
+def calculate_cost(solution: list[int]) -> int:
+    '''
+    Return the cost of solution.
+    '''
+    cost = 0
+    crew_assignment = rangers_to_crew(solution)
+
+    for crew_id, ranger_ids in crew_assignment.items():
+        pass
 
 # Create Neighbour
 
