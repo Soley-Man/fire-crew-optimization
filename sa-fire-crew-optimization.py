@@ -10,10 +10,10 @@ SEASON_END = 'August 31'
 
 # Supporting Functions
 def csv_to_dict(file_path: str) -> list[dict[str, str]]:
-    """
+    '''
     Read a CSV file and return a list of dictionaries.
     Each dictionary represents a row, with keys as column headers.
-    """
+    '''
     data = []
     with open(file_path, 'r') as file:
         reader = csv.DictReader(file)
@@ -22,14 +22,14 @@ def csv_to_dict(file_path: str) -> list[dict[str, str]]:
     return data
 
 def parse_date_str(date_str: str) -> tuple[str, int]:
-    """
+    '''
     Parses a date string like 'May 9' into month and day.
-    """
+    '''
     parts = date_str.strip().split()
     return parts[0], int(parts[1])
 
 def date_to_day_number(date_str: str) -> int:
-    """
+    '''
     Converts a date string (e.g. 'May 9') to a day number relative to SEASON_START.
 
     Args:
@@ -37,7 +37,7 @@ def date_to_day_number(date_str: str) -> int:
 
     Returns:
         int: Day number relative to SEASON_START (e.g., May 1 = 0)
-    """
+    '''
     month, day = parse_date_str(date_str)
     start_month, start_day = parse_date_str(SEASON_START)
     input_day_of_year = CUMULATIVE_DAYS[month] + day
@@ -56,48 +56,48 @@ def rangers_to_crew(solution: list[int]) -> dict[int, list[int]]:
     return crew_assignment
 
 def is_mixed_gender(crew: list[int]):
-    """
+    '''
     Return true if crew contains Rangers of mixed genders.
     The parameter crew is a list of Fire Rangers' indexes in the solution.
-    """
+    '''
     genders = set()
 
     for ranger_id in crew:
-        genders.add(fire_rangers[ranger_id]["Gender"])
+        genders.add(fire_rangers[ranger_id]['Gender'])
     
     return len(genders) > 1
 
 def is_certified(ranger_id: int):
-    """
+    '''
     Return true if the Ranger has a national fitness certification.
-    """
-    return fire_rangers[ranger_id]["Fitness Certification"] == "National"
+    '''
+    return fire_rangers[ranger_id]['Fitness Certification'] == 'National'
 
 def has_mixed_gender_restriction(ranger_id: int):
-    """
+    '''
     Return true if the Ranger must not be placed in a mixed gender crew.
-    """ 
-    return fire_rangers[ranger_id]["Mixed Crew Restrictions"] != ''
+    ''' 
+    return fire_rangers[ranger_id]['Mixed Crew Restrictions'] != ''
 
 def is_in_crew(crew: list[int], ranger_name: str):
-    """
+    '''
     Return true if the Ranger with ranger_name is in the crew.
-    """
+    '''
     for ranger_id in crew:
-        if fire_rangers[ranger_id]["Name"] == ranger_name:
+        if fire_rangers[ranger_id]['Name'] == ranger_name:
             return True
     return False
 
 def count_overlapping_unavailabilities(ranger_ids: list[int], n=0):
-    """
+    '''
     Return the number of overlapping unavailable days for Rangers in ranger_ids.
     If n=0, only count the days when all Fire Rangers are unavailable. If n > 0, count the days when at least n fire Rangers are unavailable.
-    """
+    '''
     count = 0
     all_unavailabilities = []
 
     for id in ranger_ids:
-        for unavailable_day in fire_rangers[id]["Unavailabilities"]:
+        for unavailable_day in fire_rangers[id]['Unavailabilities']:
             all_unavailabilities.append(unavailable_day)
     
     for day in set(all_unavailabilities):
@@ -112,7 +112,7 @@ def avg_experience(crew: list[int]) -> float:
     '''
     Return the average experience of crew.
     '''
-    return round( stat.mean([int(fire_rangers[ranger_id]["Years of Experience"]) for ranger_id in crew]), 2)
+    return round( stat.mean([int(fire_rangers[ranger_id]['Years of Experience']) for ranger_id in crew]), 2)
 
 def personal_prefs_penalty(crew: list[int]) -> int:
     '''
@@ -122,16 +122,16 @@ def personal_prefs_penalty(crew: list[int]) -> int:
     unsatisfied_rangers = 0
 
     for ranger_id in crew:
-        if fire_rangers[ranger_id]["Same crew preferences"]:
+        if fire_rangers[ranger_id]['Same crew preferences']:
             # If any of the preferences are satisfied, the Ranger is satisfied
-            if not any([is_in_crew(crew, name) for name in fire_rangers[ranger_id]["Same crew preferences"]]):
+            if not any([is_in_crew(crew, name) for name in fire_rangers[ranger_id]['Same crew preferences']]):
                 unsatisfied_rangers += 1
     
     # Count unsatisfied 'different crew' preferences
     diff_crew_violations = 0
 
     for ranger_id in crew:
-        for name in fire_rangers[ranger_id]["Different crew preferences"]:
+        for name in fire_rangers[ranger_id]['Different crew preferences']:
             if is_in_crew(crew, name):
                 diff_crew_violations += 1
     
@@ -211,9 +211,9 @@ five_ranger_crews_n = len(fire_rangers) % 4
 ## Convert unavailable dates from a range to the day numbers of the season (i.e. 0, 1, 2... 122)
 ### Month to day count map (non-leap year)
 MONTH_DAYS = {
-    "January": 31, "February": 28, "March": 31, "April": 30,
-    "May": 31, "June": 30, "July": 31, "August": 31,
-    "September": 30, "October": 31, "November": 30, "December": 31
+    'January': 31, 'February': 28, 'March': 31, 'April': 30,
+    'May': 31, 'June': 30, 'July': 31, 'August': 31,
+    'September': 30, 'October': 31, 'November': 30, 'December': 31
 }
 
 ### Precompute cumulative days at start of each month
@@ -243,7 +243,7 @@ for ranger in fire_rangers:
     ranger['Different crew preferences'] = diff_prefs.split(',') if diff_prefs else []
 
 ## Calculate average experience across the fire base
-avg_base_experience = round( stat.mean([int(ranger["Years of Experience"]) for ranger in fire_rangers]), 2)
+avg_base_experience = round( stat.mean([int(ranger['Years of Experience']) for ranger in fire_rangers]), 2)
 
 # Initialize Solution
 crew_ids = [n for n in range(1, crews_n + 1)] * 4
