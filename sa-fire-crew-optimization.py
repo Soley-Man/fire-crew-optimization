@@ -9,7 +9,7 @@ SEASON_START = 'May 1'
 SEASON_END = 'August 31'
 
 # Supporting Functions
-def csv_to_dict(file_path: str) -> list[dict[str: str]]:
+def csv_to_dict(file_path: str) -> list[dict[str, str]]:
     """
     Read a CSV file and return a list of dictionaries.
     Each dictionary represents a row, with keys as column headers.
@@ -44,7 +44,7 @@ def date_to_day_number(date_str: str) -> int:
     start_day_of_year = CUMULATIVE_DAYS[start_month] + start_day
     return input_day_of_year - start_day_of_year
 
-def rangers_to_crew(solution: list[int]) -> dict[int: list[int]]:
+def rangers_to_crew(solution: list[int]) -> dict[int, list[int]]:
     '''
     Return a dictionary pairing crew IDs with the list of Fire Rangers in that crew.
     Fire Rangers are represented as their indexes in the solution.
