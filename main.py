@@ -3,7 +3,7 @@ import math
 import random
 from constants import SEASON_END
 from utils import csv_to_dict, date_to_day_number
-from simulated_annealing import calculate_cost, perturbate
+from simulated_annealing import calculate_cost, perturbate, acceptance_func
 
 # Data Preparation
 ## Read Fire Rangers data
@@ -55,3 +55,28 @@ for idx in bosses_idx:
     solution[idx] = crew_ids.pop(0)
 for idx in members_idx:
     solution[idx] = crew_ids.pop(0)
+
+# Run Simulated Annnealing
+temperature = 10000
+cooling_rate = 0.9999
+end_temperature = 0.0001
+
+iterations = 0
+
+while temperature > end_temperature:
+    neighbour_solution = perturbate(solution, leaders_idx, bosses_idx, members_idx)
+
+    if acceptance_func(fire_rangers, solution, neighbour_solution, temperature, leaders_idx, bosses_idx, avg_base_experience):
+        solution = neighbour_solution
+    
+    iterations += 1
+    if iterations % 10000 == 0:
+        print(calculate_cost(fire_rangers, solution, leaders_idx, bosses_idx, avg_base_experience), temperature)
+    temperature *= cooling_rate
+
+## Print results
+solution_cost = calculate_cost(fire_rangers, solution, leaders_idx, bosses_idx, avg_base_experience)
+print()
+print('Iterations:', iterations)
+print('Final solution cost:', solution_cost)
+print('Final solution:', solution)
