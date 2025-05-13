@@ -1,4 +1,5 @@
 import random
+import math
 from utils import rangers_to_crew, avg_experience
 from penalties import personal_prefs_penalty, understaffing_penalty, mixed_crew_restrictions_penalty, fitness_certification_penalty
 
@@ -75,3 +76,16 @@ def perturbate(solution, leaders_indexes, bosses_indexes, members_indexes):
     neighbour_solution[second_ranger_id] = first_crew_id
 
     return neighbour_solution
+
+# Acceptance Function
+def acceptance_func(solution, new_solution, temperature):
+    '''
+    Return True if the new solution is accepted, else return False.
+    '''
+    cost_delta = calculate_cost(new_solution) - calculate_cost(solution)
+
+    if cost_delta < 0:
+        # Accept new solution if its cost is lower than the current solution
+        return True
+    else:
+        return random.random() <= math.exp(-cost_delta / temperature)
