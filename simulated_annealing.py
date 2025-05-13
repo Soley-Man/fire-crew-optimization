@@ -1,3 +1,4 @@
+import random
 from utils import rangers_to_crew, avg_experience
 from penalties import personal_prefs_penalty, understaffing_penalty, mixed_crew_restrictions_penalty, fitness_certification_penalty
 
@@ -34,3 +35,43 @@ def calculate_cost(fire_rangers_data: list[dict[str, str]], solution: list[int],
     cost += experience_variance * 100
 
     return round(cost)
+
+# Perturbation Function
+def perturbate(solution, leaders_indexes, bosses_indexes, members_indexes):
+    '''
+    Return a neighbour of solution by swapping two Crew Leaders,
+    Crew Bosses, or Crew Members in order to maintain a valid solution.
+    '''
+
+    crew_assignment = rangers_to_crew(solution)
+
+    # Randomly select a crew
+    first_crew_id = random.choice(list(crew_assignment.keys()))
+
+    # Randomly select a Ranger from the crew
+    first_ranger_id = random.choice(crew_assignment[first_crew_id])
+
+    # Randomly select a second crew
+    other_crews = list(crew_assignment.keys())
+    other_crews.remove(first_crew_id)
+    second_crew_id = random.choice(other_crews)
+
+    # From the second crew, randomly select a Ranger with the same role as the first
+    if first_ranger_id in leaders_indexes:
+        for ranger_id in crew_assignment[second_crew_id]:
+            if ranger_id in leaders_indexes:
+                second_ranger_id = ranger_id
+    elif first_ranger_id in bosses_indexes:
+        for ranger_id in crew_assignment[second_crew_id]:
+            if ranger_id in bosses_indexes:
+                second_ranger_id = ranger_id
+    elif first_ranger_id in members_indexes:
+        crew_members = [ranger_id for ranger_id in crew_assignment[second_crew_id] if ranger_id in members_indexes]
+        second_ranger_id = random.choice(crew_members)
+    
+    # Swap the two Rangers
+    neighbour_solution = solution[:]
+    neighbour_solution[first_ranger_id] = second_crew_id
+    neighbour_solution[second_ranger_id] = first_crew_id
+
+    return neighbour_solution

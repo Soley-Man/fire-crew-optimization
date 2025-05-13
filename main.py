@@ -3,7 +3,7 @@ import math
 import random
 from constants import SEASON_END
 from utils import csv_to_dict, date_to_day_number
-from simulated_annealing import calculate_cost
+from simulated_annealing import calculate_cost, perturbate
 
 # Data Preparation
 ## Read Fire Rangers data
