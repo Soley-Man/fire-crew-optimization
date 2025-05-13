@@ -13,19 +13,19 @@ def calculate_cost(fire_rangers_data: list[dict[str, str]], solution: list[int],
     diff_crew_base_xp = []
 
     for crew_id, ranger_ids in crew_assignment.items():
-        leadership_idndexes = [idx for idx in ranger_ids if idx in leaders_indexes + bosses_indexes]
+        leadership_indexes = [idx for idx in ranger_ids if idx in leaders_indexes + bosses_indexes]
 
         # Personal Preferences Penalty
         cost += personal_prefs_penalty(fire_rangers_data, ranger_ids)
 
         # Understaffing Penalty
-        cost += understaffing_penalty(fire_rangers_data, ranger_ids, leadership_idndexes)
+        cost += understaffing_penalty(fire_rangers_data, ranger_ids, leadership_indexes)
 
         # Mixed Crew Restriction Penalty
         cost += mixed_crew_restrictions_penalty(fire_rangers_data, ranger_ids)
 
         # Fitness Certification Penalty
-        cost += fitness_certification_penalty(fire_rangers_data, ranger_ids, leadership_idndexes)
+        cost += fitness_certification_penalty(fire_rangers_data, ranger_ids, leadership_indexes)
 
         # Record squared difference between average crew experience and average base experience
         avg_crew_exp = avg_experience(fire_rangers_data, ranger_ids)
