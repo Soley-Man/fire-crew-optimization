@@ -58,7 +58,7 @@ for idx in members_idx:
 
 # Run Simulated Annnealing
 temperature = 10000
-cooling_rate = 0.9999
+cooling_rate = 0.99
 end_temperature = 0.0001
 
 iterations = 0
