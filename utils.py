@@ -15,6 +15,17 @@ def csv_to_dict(file_path: str) -> list[dict[str, str]]:
             data.append(row)
     return data
 
+def dict_to_csv(dictionaries: list[dict[str, str]], file_path) -> None:
+    '''
+    Export a list of dictionaries as a csv file.
+    '''
+    with open(file_path, 'w', newline='') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=dictionaries[0].keys())
+        writer.writeheader()
+        writer.writerows(dictionaries)
+
+
+
 def parse_date_str(date_str: str) -> tuple[str, int]:
     '''
     Parses a date string like 'May 9' into month and day.

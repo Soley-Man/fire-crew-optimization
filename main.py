@@ -2,7 +2,7 @@ import statistics as stat
 import math
 import random
 from constants import SEASON_END
-from utils import csv_to_dict, date_to_day_number
+from utils import csv_to_dict, dict_to_csv, date_to_day_number
 from simulated_annealing import calculate_cost, perturbate, acceptance_func
 
 # Data Preparation
@@ -80,3 +80,30 @@ print()
 print('Iterations:', iterations)
 print('Final solution cost:', solution_cost)
 print('Final solution:', solution)
+
+# Export Solution
+## Remove Unavailabilities column to avoid cluttering
+for ranger_dict in fire_rangers:
+    del ranger_dict['Unavailabilities']
+
+## Add a Crew column to fire_rangers data
+for ranger_id, crew_id in enumerate(solution):
+    fire_rangers[ranger_id]['Crew'] = crew_id
+
+## Reorder the keys ensuring 'Name' comes first, 'Crew' comes second, then all other keys.
+for ranger in fire_rangers:
+    # Get the original keys and move 'Name' and 'Crew' to the front
+    reordered = {'Name': ranger['Name'], 'Crew': ranger['Crew']}
+    
+    # Add the rest of the keys to the dictionary (excluding 'Name' and 'Crew')
+    for k, v in ranger.items():
+        if k not in reordered:
+            reordered[k] = v
+
+    # Clear the original dictionary and update it with the reordered keys
+    ranger.clear()
+    ranger.update(reordered)
+
+## Export Fire Rangers data sorted by crew ID
+sorted_by_crew = sorted(fire_rangers, key=lambda ranger: int(ranger['Crew']))
+dict_to_csv(sorted_by_crew, 'solution.csv')
