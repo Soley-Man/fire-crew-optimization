@@ -77,9 +77,9 @@ def fitness_certification_penalty(fire_rangers_data: list[dict[str, str]], crew:
     if not any([is_certified(fire_rangers_data, idx) for idx in leadership_indexes]):
         return 100
     
-    # Check if less than 4 Rangers are certified to National standards
+    # Check if less than 3 Rangers are certified to National standards
     amount_certified = len([ranger_id for ranger_id in crew if is_certified(fire_rangers_data, ranger_id)]) 
-    if amount_certified < 4:
-        return (4 - amount_certified) * 50
+    if amount_certified < 3:
+        return (3 - amount_certified) * 50
     
     return 0
