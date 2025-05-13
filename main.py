@@ -79,7 +79,6 @@ solution_cost = calculate_cost(fire_rangers, solution, leaders_idx, bosses_idx, 
 print()
 print('Iterations:', iterations)
 print('Final solution cost:', solution_cost)
-print('Final solution:', solution)
 
 # Export Solution
 ## Remove Unavailabilities column to avoid cluttering
