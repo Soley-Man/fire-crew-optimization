@@ -78,11 +78,11 @@ def perturbate(solution, leaders_indexes, bosses_indexes, members_indexes):
     return neighbour_solution
 
 # Acceptance Function
-def acceptance_func(solution, new_solution, temperature):
+def acceptance_func(fire_rangers_data, solution, new_solution, temperature, leaders_indexes, bosses_indexes, avg_base_experience):
     '''
     Return True if the new solution is accepted, else return False.
     '''
-    cost_delta = calculate_cost(new_solution) - calculate_cost(solution)
+    cost_delta = calculate_cost(fire_rangers_data, new_solution, leaders_indexes, bosses_indexes, avg_base_experience) - calculate_cost(fire_rangers_data, solution, leaders_indexes, bosses_indexes, avg_base_experience)
 
     if cost_delta < 0:
         # Accept new solution if its cost is lower than the current solution
