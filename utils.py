@@ -82,12 +82,13 @@ def is_in_crew(fire_rangers_data: list[dict[str, str]], crew: list[int], ranger_
             return True
     return False
 
-def count_overlapping_unavailabilities(fire_rangers_data: list[dict[str, str]], ranger_ids: list[int], n=0):
+def count_overlapping_unavailabilities(fire_rangers_data: list[dict[str, str]], ranger_ids: list[int], max_unavailable_rangers=0):
     '''
     Return the number of overlapping unavailable days for Rangers in ranger_ids.
-    If n=0, only count the days when all Fire Rangers are unavailable. If n > 0, count the days when at least n fire Rangers are unavailable.
+    If max_unavailable_rangers = 0, only count the days when all Fire Rangers are unavailable.
+    If max_unavailable_rangers > 0, count the days when at least n fire Rangers are unavailable.
     '''
-    count = 0
+    understaffed_days = 0
     all_unavailabilities = []
 
     for id in ranger_ids:
@@ -95,12 +96,12 @@ def count_overlapping_unavailabilities(fire_rangers_data: list[dict[str, str]], 
             all_unavailabilities.append(unavailable_day)
     
     for day in set(all_unavailabilities):
-        if n == 0 and all_unavailabilities.count(day) == len(ranger_ids):
-            count += 1
-        elif n > 0 and all_unavailabilities.count(day) >= n:
-            count += 1
+        if max_unavailable_rangers == 0 and all_unavailabilities.count(day) == len(ranger_ids):
+            understaffed_days += 1
+        elif max_unavailable_rangers > 0 and all_unavailabilities.count(day) > max_unavailable_rangers:
+            understaffed_days += 1
 
-    return count
+    return understaffed_days
 
 def avg_experience(fire_rangers_data: list[dict[str, str]], crew: list[int]) -> float:
     '''

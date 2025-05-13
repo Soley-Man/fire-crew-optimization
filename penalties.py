@@ -40,14 +40,14 @@ def understaffing_penalty(fire_rangers_data: list[dict[str, str]], crew: list[in
     # Check for general understaffing (at least 3 Fire Rangers must be present in a crew)
     if len(crew) == 4:  # 4 person crew
         # At most 1 Ranger can be absent from the crew
-        days_understaffed = count_overlapping_unavailabilities(fire_rangers_data, crew, n = 1)
+        days_understaffed = count_overlapping_unavailabilities(fire_rangers_data, crew, max_unavailable_rangers = 1)
 
         cost += days_understaffed * 100
 
     elif len(crew) == 5:  # 5 person crew
         # At most 2 rangers may be absent from the crew
-        days_understaffed_by_1 = count_overlapping_unavailabilities(fire_rangers_data, crew, n = 1)
-        days_understaffed_by_2 = count_overlapping_unavailabilities(fire_rangers_data, crew, n = 2)
+        days_understaffed_by_1 = count_overlapping_unavailabilities(fire_rangers_data, crew, max_unavailable_rangers = 1)
+        days_understaffed_by_2 = count_overlapping_unavailabilities(fire_rangers_data, crew, max_unavailable_rangers = 2)
         
         # The cost increases by 100 per day understaffed, per ranger missing
         cost += days_understaffed_by_1 * 100 + days_understaffed_by_2 * 2 * 100
