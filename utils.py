@@ -24,8 +24,6 @@ def dict_to_csv(dictionaries: list[dict[str, str]], file_path) -> None:
         writer.writeheader()
         writer.writerows(dictionaries)
 
-
-
 def parse_date_str(date_str: str) -> tuple[str, int]:
     '''
     Parses a date string like 'May 9' into month and day.
