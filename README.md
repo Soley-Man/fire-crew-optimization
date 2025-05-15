@@ -1,5 +1,7 @@
 # 🚒 Optimization of Ontario Fire Rangers Crew Assignment
 
+**Disclaimer**: This is a personal portfolio project and is in no way affiliated with or endorsed by the Ministry of Natural Resources and Forestry.
+
 ## 📌 Problem Statement
 
 Each year, Fire Management Headquarters (FMH) across Ontario organize Fire Rangers into crews in preparation for the wildfire season. Crew assignment, however, is a complex process and must respect several constraints:
