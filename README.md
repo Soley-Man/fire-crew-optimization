@@ -86,7 +86,7 @@ A heavier penalty is applied for unmet *different crew* preferences, with each i
 
 2. **Understaffing**  
 - Leadership Gap: 500 per day, per crew without a leader  
-- If Crew Size < 3: 100 per missing member, per day
+- Crew Size < 3: 100 per missing member, per day
 
 3. **Mixed-Gender Restriction Violation**  
 - 500 for each Ranger with a gender restriction placed in a mixed-gender crew  
