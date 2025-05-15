@@ -133,7 +133,6 @@ After execution, the algorithm exports the final solution as a CSV file that mir
 ## ✅ Example Result
 Below is the optimized crew assignment for the Fire Rangers from fire-rangers-data.csv (also saved as solution.csv). This mock data was generated using random names and attributes and is not intended to represent or identify any real person.
 
-**Cost of solution**: `1` (due to minimal unavoidable experience variance)
 | Name             | Crew | Role   | Years of Experience | Fitness Certification | Start Date | End Date  | Gender | Mixed Crew Restrictions | Same crew preferences                 | Different crew preferences |
 |------------------|------|--------|---------------------|------------------------|------------|-----------|--------|--------------------------|----------------------------------------|-----------------------------|
 | Legend Nash      | 1    | Leader | 7                   | National               |            |           | M      |                          | []                                     | ['Mack Small']              |
@@ -158,3 +157,5 @@ Below is the optimized crew assignment for the Fire Rangers from fire-rangers-da
 | Adriel Coleman   | 5    | Boss   | 4                   | National               |            |           | F      |                          | ['Jeffrey Coleman']                   | []                          |
 | Jeffrey Coleman  | 5    | Member | 2                   | National               |            |           | M      |                          | ['Adriel Coleman']                    | []                          |
 | Robin Hull       | 5    | Member | 3                   | National               |            |           | M      |                          | []                                     | []                          |
+
+**Cost of solution**: `1` (due to minimal unavoidable experience variance)
