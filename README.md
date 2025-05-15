@@ -73,18 +73,12 @@ In this example:
 The objective function penalizes solutions based on constraint violations.
 
 ### **Total Cost**
-$$
-Cost = Unsatisfied Preferences Penalty
-+ Understaffing Penalty
-+ Mixed Crew Penalty
-+ National Exchange Penalty
-+ Experience Variance Penalty 
-$$
+Cost = Unsatisfied Preferences Penalty + Understaffing Penalty + Mixed Crew Penalty + National Exchange Penalty + Experience Variance Penalty 
 
 ### **Penalty Breakdown**
 
 1. **Unsatisfied Personal Preferences**  
-$ \text{Penalty} = (S + D) \times 10 $
+Penalty = (S + D) × 10
 - S: Number of Fire Rangers with unmet same crew preferences  
 - D: Number of unmet different crew preferences
 
@@ -102,11 +96,11 @@ A heavier penalty is applied for unmet *different crew* preferences, with each i
 - If < 3 certified members: `penalty = (3 - certified_count) * 50`  
 
 5. **Experience Variance**  
-$ V = {\sum(C_i - \overline{C})^2 \over N} $
-$ \text{Penalty} = V \times 100 $
+V = ∑(Cᵢ − C_avg)² / N  
+Penalty = V × 100
 
-- $ C_i $: Average experience in crew i  
-- $ \overline{C} $: Average experience across all Rangers  
+- Cᵢ: Average experience in crew i  
+- C_avg: Average experience across all Rangers  
 - N: Number of crews
 
 ---
